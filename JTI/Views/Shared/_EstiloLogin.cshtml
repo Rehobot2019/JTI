@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <!--<link rel="stylesheet" href="~/css/site.css" />-->
+
+    <!--Estilos de la página LogIn-->
+    <style>
+        html, body {
+            height: 100%;
+            background: white url(../images/Frontpage.jpg) center center no-repeat;
+            background-size: cover;
+        }
+
+        images {
+            max-width: 100%;
+        }
+
+        #cover {
+                   
+            color: white;
+            height: 100%;
+            text-align: center;
+            display: flex;
+            align-items: center;
+        }
+
+        #cover-texto {
+            width: 100%;
+            color: navy;
+        }
+
+        #cover-texto .form-inline {
+            padding: 5rem 0;
+        }
+
+        #footer-login{
+            text-align: center;
+            background: rgba(0, 0, 0, .8);
+            color: white;
+            padding: 1.875rem;
+        }
+
+       
+    </style>
+
+</head>
+<body>
+    <!---->
+    <section id="cover">
+        <div id="cover-texto">
+            <div class="container">
+                <div class=" row">
+                    <div class=" col-sm-12">
+                        <h1 class=" display-3">JTI VEHICLE TRAKING SYSTEM</h1>
+                        <p>Sistema de Geolocalización Vehículos JTI</p>
+
+
+                        <form action="" class="form-inline justify-content-center">
+                            <div class="form-group">
+                                <label class=" sr-only ">Usuario</label>
+                                <input type="text" class="form-control form-control-lg" placeholder="Ingrese Usuario" />
+                            </div>
+                            <div class=" form-group">
+                                <label class=" sr-only ">Contraseña</label>
+                                <input type="text" class="form-control form-control-lg" placeholder="Ingrese Password" />
+                            </div>
+                            <button type="submit" class=" btn btn-success btn-lg">Ingresar</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer id="footer-login">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <p>Creado por CSSP<a href="www.csspconsulting.com"> Consulting Service and Security Polygraph LTDA</a></p>
+                    <p>Desarrollado por <a href="www.escsas.com"> E.S.C. SAS</a></p>
+                    <p>Todos los derechos reservados &copy; 2019 - JTI</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+    <script src="~/js/site.min.js" asp-append-version="true"></script>
+    @RenderBody()
+
+</body>
+</html>

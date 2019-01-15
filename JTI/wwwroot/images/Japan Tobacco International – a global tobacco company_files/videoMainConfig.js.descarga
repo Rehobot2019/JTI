@@ -1,0 +1,316 @@
+var inv_mainConfiguration=
+{
+	//18-01-2017 Urvi : Allow File execution in local machine
+	inv_local:false, 
+	
+	inv_isIE8:((/MSIE (\d+\.\d+);/.test(navigator.userAgent))?new Number(RegExp.$1)==8:false),
+	inv_videoJQuery:$j,
+	
+	inv_protocol:'https://', //'http://'  //'https://'  //'http://'
+	inv_hostName:'viz.tools.investis.com/', //'visualisation.investis.com/'   //'viz.tools.investis.com/'    //'localhost/'
+	inv_playerPath:'video/videoPlayer-v.2.0-latest/',//'video/videoPlayer-v.2.0-test/'        //'video/videoPlayer-v.2.0/'	
+	inv_videoClient:'jti-corporate',
+	
+	inv_renderViewPath:'view/@viewFileName.html',///view/@viewFileName.html////golar-lng.staging.investis.com/tools/urlproxy/advurlproxy.aspx?settingname=singleplayer
+	inv_xmlPath:'files/@xmlFileName.xml',
+	
+	/* videoplayer flags */
+	inv_videoCodeReady:false,
+	inv_cssPath:'css/videoplayer.css',
+
+	/* infographic flags */
+	inv_infographicCodeReady:false,
+	inv_childlabour_cssPath:'css/childlabour.css',
+
+	/*smokinglounges map flags */
+	inv_mapCodeReady:false,
+	inv_smokinglounges_cssPath:'css/smokinglounges.css',
+	
+	/*illegalTrade map flags */
+	inv_illegalTrade_cssPath:'css/illegaltrade.css',
+	inv_scrollBarCssPath:'../centralizedprojectfiles/css/jquery.mCustomScrollbar.css',
+
+	inv_facebookAppId:'157812094901383',	
+	inv_gaType:'universal',
+	inv_gaAccount:'UA-32177457-1',
+	
+	inv_startTime:new Date(),
+	inv_disableBuiltInGATracking:false,
+	
+	inv_dateFormat:'yyyy-dd-MM',
+	
+	inv_modulesRequested:new Array(),
+	inv_modulesLoaded:new Array(),
+	inv_bypassModuleLoadLogic:false,
+	
+	inv_disableBuiltInDeeplinking:false,
+	
+	inv_debugMode:false //For debugging - Value:true/false - DefaultValue:false
+}
+//18-01-2017 Urvi : Allow File execution in local machine -- start
+if(window.location.host+"/"==inv_mainConfiguration.inv_hostName || window.location.host=='localhost')
+	inv_mainConfiguration.inv_local=true;
+
+if(inv_mainConfiguration.inv_local)
+{
+	inv_mainConfiguration.inv_bypassModuleLoadLogic = false;
+	inv_mainConfiguration.inv_gaAccount = 'UA-123-1';
+	inv_mainConfiguration.inv_renderViewPath = "view/@viewFileName.html";
+}
+
+inv_mainConfiguration.inv_videoBaseURL = function()
+{
+	if(inv_mainConfiguration.inv_local)
+		return '../';
+	else
+		return (inv_mainConfiguration.inv_protocol + inv_mainConfiguration.inv_hostName + inv_mainConfiguration.inv_playerPath);
+}
+//18-01-2017 Urvi : Allow File execution in local machine -- end
+if(!inv_mainConfiguration.inv_isIE8)  	
+{
+	inv_mainConfiguration.inv_modules=
+	{
+		//18-01-2017 Urvi : Changed Centralized Files path
+		paths: {
+			libs: inv_mainConfiguration.inv_videoBaseURL() + "centralizedprojectfiles/js/libs/",
+			models: inv_mainConfiguration.inv_videoBaseURL() + "centralizedprojectfiles/js/models/",
+			controllers: inv_mainConfiguration.inv_videoBaseURL() + "centralizedprojectfiles/js/controllers/",
+			clientDir: inv_mainConfiguration.inv_videoBaseURL() + inv_mainConfiguration.inv_videoClient + "/js/"
+		},
+		shim: {		
+			/* infographics paths */	
+			'clientDir/jquery.infoGraphicsCode': 
+			{
+				deps: ['libs/matchMedia','models/jquery.deviceDetection','libs/ga','models/jquery.gaCode','models/jquery.readXMLFile','libs/jquery.svg']//,'libs/jquery-ui'
+			},
+			/* maps paths */	
+			'clientDir/jquery.mapCode': 
+			{
+				deps: ['libs/matchMedia','models/jquery.deviceDetection','libs/jquery.mCustomScrollbar.concat.min','libs/ga','models/jquery.gaCode','models/jquery.readXMLFile','libs/jquery.svg','clientDir/svg-pan-zoom.min','clientDir/jquery-ui.accordian.min']//,'libs/jquery-ui'
+			},
+			/* videoplayer paths */	
+			'clientDir/jquery.videoCodeTest': 
+			{
+				deps: ['libs/dash.mediaplayer.min','libs/matchMedia','models/jquery.deviceDetection','libs/ga','models/jquery.gaCode']
+			},
+			'clientDir/jquery.videoDataCtrl': 
+			{
+				deps: ['clientDir/jquery.brightcoveData']
+			},
+			'clientDir/jquery.singlePlayerCtrl': 
+			{
+				deps: ['clientDir/jquery.videoPlayerCtrl']
+			},
+			'clientDir/jquery.videoPlayerCtrl': 
+			{
+				deps: ['clientDir/jquery.html5Player1']
+			},
+			'controllers/jquery.videoControlsCtrl': 
+			{
+				deps: ['models/jquery.videoControls']
+			},
+			'controllers/jquery.shareCtrl': 
+			{
+				deps: ['models/jquery.shareCode']
+			},
+			'controllers/jquery.soundCtrl': 
+			{
+				deps: ['models/jquery.soundCode']
+			}
+		}
+	}
+	inv_mainConfiguration.inv_videoJQuery(function()
+	{		
+		inv_mainConfiguration.inv_videoJQuery.getScript((inv_mainConfiguration.inv_bypassModuleLoadLogic==true?(inv_mainConfiguration.inv_modules.paths.clientDir + 'videoMerged-test1.js'):(inv_mainConfiguration.inv_modules.paths.libs + 'globalScripts.js')) + '?' + inv_mainConfiguration.inv_videoJQuery.now() , function() 
+		{
+			inv_mainConfiguration.inv_debugConsole("jquery is ready");
+			
+			//18-01-2017 Urvi : Allow File execution in local machine
+			if(!inv_mainConfiguration.inv_local)
+			{
+				var inv_absoluteFilePath=inv_mainConfiguration.inv_videoBaseURL() + inv_mainConfiguration.inv_videoClient;
+				inv_mainConfiguration.inv_renderViewPath = inv_absoluteFilePath + "/" + inv_mainConfiguration.inv_renderViewPath;
+
+				inv_mainConfiguration.inv_xmlPath = inv_absoluteFilePath + "/" + inv_mainConfiguration.inv_xmlPath;
+
+				/* videoplayer Code */			
+				inv_mainConfiguration.inv_cssPath = inv_absoluteFilePath + "/" + inv_mainConfiguration.inv_cssPath;
+
+				/* infographics Code */			
+				inv_mainConfiguration.inv_childlabour_cssPath = inv_absoluteFilePath + "/" + inv_mainConfiguration.inv_childlabour_cssPath;
+
+				/*smokinglounges map Code */			
+				inv_mainConfiguration.inv_smokinglounges_cssPath = inv_absoluteFilePath + "/" + inv_mainConfiguration.inv_smokinglounges_cssPath;
+				
+				/*illegalTrade map Code */
+				inv_mainConfiguration.inv_illegalTrade_cssPath = inv_absoluteFilePath + "/" + inv_mainConfiguration.inv_illegalTrade_cssPath;
+
+				/*mCustomScrollbar css Code */
+				inv_mainConfiguration.inv_scrollBarCssPath = inv_mainConfiguration.inv_videoBaseURL() + "/" + inv_mainConfiguration.inv_scrollBarCssPath;
+			}
+
+			if(inv_mainConfiguration.inv_bypassModuleLoadLogic)
+			{
+				inv_mainConfiguration.inv_videoJQuery('<link rel="stylesheet" href="' + inv_mainConfiguration.inv_videoBaseURL() + inv_mainConfiguration.inv_videoClient + '/css/videoMerged.css" type="text/css" />').appendTo("head").each(function() 
+				{
+					inv_mainConfiguration.inv_debugConsole("merged css is ready");
+				});
+			}
+			else{
+				/* videoplayer Code */
+				inv_mainConfiguration.inv_videoJQuery('<link rel="stylesheet" href="'+inv_mainConfiguration.inv_cssPath +'" type="text/css" />').appendTo("head").each(function() 
+				{
+					inv_mainConfiguration.inv_debugConsole("video css is ready");
+				});
+				/* childlabourinfographic css*/	
+				inv_mainConfiguration.inv_videoJQuery('<link rel="stylesheet" href="'+inv_mainConfiguration.inv_childlabour_cssPath +'" type="text/css" />').appendTo("head").each(function() 
+				{
+					inv_mainConfiguration.inv_debugConsole("childlabourinfographic css is ready");
+				});	
+				/*smokinglounges map css*/	
+				inv_mainConfiguration.inv_videoJQuery('<link rel="stylesheet" href="'+inv_mainConfiguration.inv_smokinglounges_cssPath +'" type="text/css" />').appendTo("head").each(function() 
+				{
+					inv_mainConfiguration.inv_debugConsole("smokinglounges map css is ready");
+				});	
+				/*illegaltrade map css*/	
+				inv_mainConfiguration.inv_videoJQuery('<link rel="stylesheet" href="'+inv_mainConfiguration.inv_illegalTrade_cssPath +'" type="text/css" />').appendTo("head").each(function() 
+				{
+					inv_mainConfiguration.inv_debugConsole("illegaltrade map css is ready");
+				});	
+				/*mCustomScrollbar css*/
+				inv_mainConfiguration.inv_videoJQuery('<link rel="stylesheet" href="'+inv_mainConfiguration.inv_scrollBarCssPath+'" type="text/css" />').appendTo("head").each(function() 
+				{
+					inv_mainConfiguration.inv_debugConsole("scroll css is ready");
+				});
+			}
+
+			inv_mainConfiguration.inv_resolveModuleNameAndLoad(['clientDir/jquery.videoCodeTest','clientDir/jquery.videoDataCtrl'],function()
+			{
+				inv_mainConfiguration.inv_videoDataContainer=inv_mainConfiguration.inv_videoJQuery("body").videoDataCtrl(
+				{
+					videoDataReceived:function()
+					{
+						inv_mainConfiguration.inv_debugConsole("video code and data js ready");
+						inv_mainConfiguration.inv_videoCodeReady=true;			
+					}
+					,errorReceived:function(errString)
+					{
+						inv_mainConfiguration.inv_debugConsole('inv_videoDataContainer Error:'+errString);
+					}
+				});		
+			});
+
+			inv_mainConfiguration.inv_resolveModuleNameAndLoad(['clientDir/jquery.infoGraphicsCode'],function()
+			{
+				inv_mainConfiguration.inv_debugConsole("infoGraphics code ready");
+				inv_mainConfiguration.inv_infoGraphicsCodeReady=true;
+			});	
+
+			
+			inv_mainConfiguration.inv_resolveModuleNameAndLoad(['clientDir/jquery.mapCode'],function()
+			{
+
+				inv_mainConfiguration.inv_debugConsole("map code ready");
+				inv_mainConfiguration.inv_mapCodeReady=true;
+			});	
+		});
+	});
+}
+
+(function($)
+{
+	$.fn.InvInfoGraphics = function(params) 
+	{
+		var def = new $.Deferred();
+		var me = $(this);
+		var dataname='infoGraphicsCode';
+		var instance = me.data(dataname);
+		if(!inv_mainConfiguration.inv_isIE8)  	
+		{
+			if(instance==undefined && !inv_mainConfiguration.inv_infoGraphicsCodeReady)			
+			{
+				var checkInfoGraphicsCodeReady = setInterval(function()
+				{
+					if(inv_mainConfiguration.inv_infoGraphicsCodeReady)
+					{
+						clearInterval(checkInfoGraphicsCodeReady);
+						def.resolve(me.infoGraphicsCode(params));
+					}
+				},500);	
+			}
+			else
+				def.resolve(me.infoGraphicsCode(params));
+		}
+		else
+		{
+			me.html("not supported");
+			def.reject();
+		}
+		return def.promise(instance);
+	};
+})(inv_mainConfiguration.inv_videoJQuery);
+
+(function($)
+{
+	$.fn.InvPlayer = function(params) 
+	{
+		var def = new $.Deferred();
+		var me = $(this);
+		var dataname='videoCode';
+		var instance = me.data(dataname);
+		if(!inv_mainConfiguration.inv_isIE8)  	
+		{
+			if(instance==undefined && !inv_mainConfiguration.inv_videoCodeReady)			
+			{
+				var checkvideoCodeReady = setInterval(function()
+				{
+					if(inv_mainConfiguration.inv_videoCodeReady)
+					{
+						clearInterval(checkvideoCodeReady);
+						def.resolve(me.videoCode(params));
+					}
+				},500);	
+			}
+			else
+				def.resolve(me.videoCode(params));
+		}
+		else
+		{
+			me.html("not supported");
+			def.reject();
+		}
+		return def.promise(instance);
+	};
+})(inv_mainConfiguration.inv_videoJQuery);
+(function($)
+{
+	$.fn.InvMap = function(params) 
+	{
+		var def = new $.Deferred();
+		var me = $(this);
+		var dataname='mapCode';
+		var instance = me.data(dataname);
+		if(!inv_mainConfiguration.inv_isIE8)  	
+		{
+			if(instance==undefined && !inv_mainConfiguration.inv_mapCodeReady)			
+			{
+				var checkInvMapCodeReady = setInterval(function()
+				{
+					if(inv_mainConfiguration.inv_mapCodeReady)
+					{
+						clearInterval(checkInvMapCodeReady);
+						def.resolve(me.mapCode(params));
+					}
+				},500);	
+			}
+			else
+				def.resolve(me.mapCode(params));
+		}
+		else
+		{
+			me.html("not supported");
+			def.reject();
+		}
+		return def.promise(instance);
+	};
+})(inv_mainConfiguration.inv_videoJQuery);
