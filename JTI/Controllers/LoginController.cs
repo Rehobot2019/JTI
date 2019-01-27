@@ -6,16 +6,23 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using JTI.Models;
 
-namespace JTI.Controllers
+
+
+
+namespace JTI.Controllers 
 {
     public class LoginController : Controller
     {
+       
         public IActionResult Login()
         {
-            ViewData["Message"] = "Escriba sus credenciales de inicio";
             return View();
         }
 
-        
+       
+       
+
+
+
     }
 }
