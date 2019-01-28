@@ -6,67 +6,52 @@
     ViewData["Title"] = "Login";
 }
 
-<br />
 <h4>JTI VEHICLE TRACKING SYSTEM</h4>
 <p>Sistema de Control Flota Vehicular JTI</p>
 <hr />
 <section id="cover">
     <div id="cover-texto">
         <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                    <h1 class="display-3">Ingrese sus datos para iniciar sesión</h1>
-                    
+            <div class="card">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h2 class="display-3">Ingrese sus datos para iniciar sesión</h2>
+                        <form asp-controller="Login" asp-action="Login" method="post" class="form-inline ">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group text-left">
+                                <label asp-for="NombreUsuario" class="control-label">Nombre Usuario:</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-user"></span>
+                                    </span>
+                                    <input asp-for="NombreUsuario" class="form-control form-control-lg" placeholder="Usuario" />
+                                </div>
+                                <span asp-validation-for="NombreUsuario" class="text-danger"></span>
+                            </div><br /><br />
 
-                    <form asp-action="Login" class="form-inline justify-content-center">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="form-group">
-                            <label asp-for="NombreUsuario" class="control-label">Nombre Usuario</label>
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-user"></span>
-                                </span>
-                                <input asp-for="NombreUsuario" class="form-control form-control-lg" placeholder="Usuario" />
-                            </div>
-                            <span asp-validation-for="NombreUsuario" class="text-danger"></span>
-                        </div><br /><br />
-                        
-                        
-                        <div class="form-group">
-                            <label asp-for="Password" class="control-label"></label>
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-pencil"></span>
-                                </span>
-                                <input asp-for="Password" class="form-control form-control-lg" placeholder="Password" />
-                            </div>
-                            <span asp-validation-for="Password" class="text-danger"></span>
-                        </div><br />
-                        <div class="form-group">
-                            <input type="submit" value="Inicio" class="btn btn-success btn-lg" />
-                        </div>
-                        <br />
-                        <br />
-                        <div class="form-group">
-                            <div class="checkbox">
-                                <label>
-                                    <input asp-for="Recordarme" /> @Html.DisplayNameFor(model => model.Recordarme)
-                                </label>
-                            </div>
-                        </div>
-                        
-                    </form>
 
+                            <div class="form-group">
+                                <label asp-for="Password" class="control-label">Password:</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </span>
+                                    <input asp-for="Password" class="form-control form-control-lg" placeholder="Password" />
+                                </div>
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div><br /><br />
+                            <div class="form-group">
+                                <input type="submit" value="Inicio" class="btn btn-success btn-lg" />
+                            </div>
+                        </form>
+                        <label id="indexMessage" class="error">@Html.DisplayFor(model => model.ErrorMessage)</label>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
 </section>
-
-
-
-
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

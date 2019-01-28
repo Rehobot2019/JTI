@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 
 namespace JTI.Models
 {
@@ -49,18 +50,16 @@ namespace JTI.Models
         [DataType(DataType.Password)]
         public string ConfirmarPasswordUser { get; set; }*/
 
+        [TempData]
+        public String ErrorMessage { get; set; }
 
         [Required(ErrorMessage = "Nombre de Usuario es Obligatorio")]
-        [Display(Name = "Nombre de Usuario: ")]
         public string NombreUsuario { get; set; }
 
         [Required(ErrorMessage = "Contraseña es Obligatoria")]
-        [Display(Name = "Contraseña: ")]
         [DataType(DataType.Password)]
+        [StringLength(100, ErrorMessage ="El número de caracteres de {0} debe ser al menos {2}", MinimumLength =6)]
         public string Password { get; set; }
-
-        [Display(Name = "Recordarme ")]
-        public bool Recordarme { get; set; }
 
     }
 }
